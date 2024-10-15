@@ -11,6 +11,7 @@ import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var textResult: TextView
+    lateinit var opDisplay: TextView
     var state: Int = 1
     var op: Int = 0
     var op1: Int = 0
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         textResult = findViewById<TextView>(R.id.result)
+        opDisplay = findViewById<TextView>(R.id.showOp)
 
         findViewById<Button>(R.id.number0).setOnClickListener(this)
         findViewById<Button>(R.id.number1).setOnClickListener(this)
@@ -74,15 +76,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         } else if (id == R.id.plus) {
             op = 1
             state = 2
+            opDisplay.text = "+"
         } else if (id == R.id.minus) {
             op = 2
             state = 2
+            opDisplay.text = "-"
         } else if (id == R.id.multiply) {
             op = 3
             state = 2
+            opDisplay.text = "*"
         } else if (id == R.id.divide) {
             op = 4
             state = 2
+            opDisplay.text = "/"
         } else if (id == R.id.equal) {
             var result = 0
 
@@ -96,6 +102,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 result = op1 / op2
             }
 
+            opDisplay.text = ""
             textResult.text = "$result"
             state = 1
             op1 = result
