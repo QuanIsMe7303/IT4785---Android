@@ -50,35 +50,42 @@ class MainActivity : AppCompatActivity() {
         showButton.setOnClickListener {
             val radioId = radGrp.checkedRadioButtonId
 
+            errorText.text = ""
+
             if (number.text.isEmpty()) {
                 errorText.setText("Bạn chưa nhập gì")
             } else {
-                val numberInput: Int = number.text.toString().toInt()
-
-                if (numberInput < 0) {
-                    errorText.setText("Hãy nhập số nguyên dương !")
+                val numberInputString = number.text.toString()
+                if (!numberInputString.all { it.isDigit() }) {
+                    errorText.text = "Hãy nhập đúng định dạng số!"
                 } else {
-                    when(radioId) {
-                        radEven.id -> {
-                            items.clear()
-                            for (num in 0..numberInput step 2) {
-                                items.add(num)
+                    val numberInput: Int = numberInputString.toInt()
+
+                    if (numberInput <= 0) {
+                        errorText.text = "Hãy nhập số nguyên dương!"
+                    } else {
+                        when (radioId) {
+                            radEven.id -> {
+                                items.clear()
+                                for (num in 0..numberInput step 2) {
+                                    items.add(num)
+                                }
                             }
-                        }
-                        radOdd.id -> {
-                            items.clear()
-                            for (num in 1..numberInput step 2) {
-                                items.add(num)
+                            radOdd.id -> {
+                                items.clear()
+                                for (num in 1..numberInput step 2) {
+                                    items.add(num)
+                                }
                             }
-                        }
-                        radSquare.id -> {
-                            items.clear()
-                            for (num in 1..sqrt(numberInput.toDouble()).toInt()) {
-                                items.add(num * num)
+                            radSquare.id -> {
+                                items.clear()
+                                for (num in 1..sqrt(numberInput.toDouble()).toInt()) {
+                                    items.add(num * num)
+                                }
                             }
-                        }
-                        else -> {
-                            errorText.setText("Hãy lựa chọn loại số!")
+                            else -> {
+                                errorText.text = "Hãy lựa chọn loại số!"
+                            }
                         }
                     }
                 }
